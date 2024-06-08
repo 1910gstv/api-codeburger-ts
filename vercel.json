@@ -14,7 +14,7 @@
     ],
     "headers": [
     {
-      "src": "src/server.ts",
+      "source": "src/server.ts",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
