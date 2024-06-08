@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categorias {
+  id        Int        @id @default(autoincrement())
+  descricao String?    @db.VarChar(255)
+  produtos  produtos[]
+}
+
+model enderecos {
+  id         Int        @id @default(autoincrement())
+  logradouro String     @db.VarChar(255)
+  bairro     String     @db.VarChar(255)
+  cidade     String     @db.VarChar(50)
+  estado     String     @db.VarChar(2)
+  cep        Int
+  usuarios   usuarios[]
+}
+
+model pagamentos {
+  id        Int       @id @default(autoincrement())
+  descricao String    @db.VarChar(255)
+  pedidos   pedidos[]
+}
+
+model pedidos {
+  id              Int               @id @default(autoincrement())
+  data_pedido     DateTime          @default(now()) @db.Timestamp(6)
+  valor_total     Decimal           @db.Decimal(7, 2)
+  pagamentos_id   Int
+  usuario_id      Int
+  pagamentos      pagamentos        @relation(fields: [pagamentos_id], references: [id], onUpdate: Restrict, map: "foreignkey_id_pagamentos")
+  usuarios        usuarios          @relation(fields: [usuario_id], references: [id], onUpdate: Restrict, map: "foreignkey_id_usuarios")
+  pedidosprodutos pedidosprodutos[]
+
+  @@index([pagamentos_id], map: "id_pagamentos_fk")
+  @@index([usuario_id], map: "id_usuariosfk")
+}
+
+model pedidosprodutos {
+  id        Int       @id @default(autoincrement())
+  PedidoId  Int?
+  ProdutoId Int?
+  pedidos   pedidos?  @relation(fields: [PedidoId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "foreignkey_pedidos_produtos")
+  produtos  produtos? @relation(fields: [ProdutoId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "foreignkey_produtos_pedidos")
+
+  @@index([PedidoId], map: "PedidoId")
+  @@index([ProdutoId], map: "ProdutoId")
+}
+
+model produtos {
+  id              Int               @id @default(autoincrement())
+  nome            String            @db.VarChar(100)
+  descricao       String            @db.VarChar(250)
+  valor           Decimal           @db.Decimal(7, 2)
+  categorias_id   Int?
+  pedidosprodutos pedidosprodutos[]
+  categorias      categorias?       @relation(fields: [categorias_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "foreignkey_id_categoria")
+
+  @@index([categorias_id], map: "fk_id_categoria")
+}
+
+model usuarios {
+  id          Int       @id @default(autoincrement())
+  nome        String    @db.VarChar(255)
+  sobrenome   String    @db.VarChar(255)
+  email       String    @db.VarChar(100)
+  senha       String    @db.VarChar(40)
+  endereco_id Int
+  pedidos     pedidos[]
+  enderecos   enderecos @relation(fields: [endereco_id], references: [id], onUpdate: Restrict, map: "foreignkey_id_endereco")
+
+  @@index([endereco_id], map: "id_endereco")
+}
