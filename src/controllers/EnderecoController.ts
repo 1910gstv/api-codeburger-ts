@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { prismaClient } from "../database/prismaClient";
 
-export class CategoriaController{
+export class EnderecoController{
     public async getAll(request: Request, response:Response){
         try {
-            const AllCategories = await prismaClient.categorias.findMany()
-            return response.status(200).json(AllCategories)
+            const allAddresses = await prismaClient.enderecos.findMany()
+            return response.status(200).json(allAddresses)
         } catch(error) {
             return response.status(500).json(error)
         }
@@ -15,27 +15,27 @@ export class CategoriaController{
         const { id } = request.params
 
         try {
-            const category = await prismaClient.categorias.findUnique({
+            const address = await prismaClient.enderecos.findUnique({
                 where: {
                     id: Number(id)
                 }
             })
-            return response.status(200).json(category)
+            return response.status(200).json(address)
         } catch(error) {
             return response.status(500).json(error)
         }
     }
 
     public async create(request: Request, response: Response){
-        const { descricao } = request.body
+        const { logradouro, bairro, cidade, estado, cep } = request.body
 
         try {
-            const newCategoryCreated = await prismaClient.categorias.create({
+            const newAddressCreated = await prismaClient.enderecos.create({
                 data: {
-                    descricao
+                    logradouro, bairro, cidade, estado, cep
                 }
             });
-            return response.status(200).json(newCategoryCreated)      
+            return response.status(200).json(newAddressCreated)      
         } catch (error) {
             return response.status(500).json(error);
         }
@@ -43,18 +43,22 @@ export class CategoriaController{
 
     public async edit(request: Request, response: Response){
         const { id } = request.params
-        const { descricao } = request.body
+        const { logradouro, bairro, cidade, estado, cep  } = request.body
 
         try {
-            const updateCategory = await prismaClient.categorias.update({
+            const updateAddress = await prismaClient.enderecos.update({
                 where: {
                     id: Number(id)
                 },
                 data: {
-                    descricao,
+                    logradouro,
+                    bairro,
+                    cidade,
+                    estado,
+                    cep 
                 }
             })
-            return response.status(200).json(updateCategory)
+            return response.status(200).json(updateAddress)
         } catch(error) {
             return response.status(500).json({error: error})
         }
@@ -64,12 +68,12 @@ export class CategoriaController{
         const { id } = request.params
 
         try {
-            const category = await prismaClient.categorias.delete({
+            await prismaClient.enderecos.delete({
                 where: {
                     id: Number(id)
                 }
             })
-            return response.status(200).json({message: `A categoria ${category.descricao} foi deletada`})
+            return response.status(200).json({message: `O endereco ${id} foi deletada`})
         } catch(error) {
             return response.status(500).json(error)
         }
