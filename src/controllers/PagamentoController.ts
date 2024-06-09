@@ -5,6 +5,7 @@ export class PagamentoController{
     public async getAll(request: Request, response:Response){
         try {
             const allPayments = await prismaClient.pagamentos.findMany()
+            console.log(allPayments)
             return response.status(200).json(allPayments)
         } catch(error) {
             return response.status(500).json(error)
