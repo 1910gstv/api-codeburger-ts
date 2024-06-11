@@ -4,6 +4,8 @@ import { EnderecoController } from "./controllers/EnderecoController";
 import { PagamentoController } from "./controllers/PagamentoController";
 import { PedidoController } from "./controllers/PedidoController";
 import { PedidoProdutoController } from "./controllers/PedidoProdutoController";
+import { ProdutoController } from "./controllers/ProdutoController";
+import { UsuarioController } from "./controllers/UsuarioController";
 
 const router = Router();
 
@@ -12,6 +14,8 @@ const enderecos = new EnderecoController()
 const pagamentos = new PagamentoController()
 const pedidos = new PedidoController()
 const pedidosprodutos = new PedidoProdutoController()
+const produtos = new ProdutoController()
+const usuarios = new UsuarioController()
 
 // CATEGORIAS ROUTES
 router.get('/getAllCategories', categories.getAll);
@@ -47,5 +51,19 @@ router.get('/getOrder/:id', pedidosprodutos.getById);
 router.post('/createOrder', pedidosprodutos.create);
 router.put('/updateOrder/:id', pedidosprodutos.edit);
 router.delete('/deleteOrder/:id', pedidosprodutos.delete);
+
+// PRODUTOS ROUTES
+router.get('/getAllProducts', produtos.getAll);
+router.get('/getProduct/:id', produtos.getById);
+router.post('/createProduct', produtos.create);
+router.put('/updateProduct/:id', produtos.edit);
+router.delete('/deleteProduct/:id', produtos.delete);
+
+// USUARIOS ROUTES
+router.get('/getAllUsers', usuarios.getAll);
+router.get('/getUser/:id', usuarios.getById);
+router.post('/createUser', usuarios.create);
+router.put('/updateUser/:id', usuarios.edit);
+router.delete('/deleteUser/:id', usuarios.delete);
 
 export { router };
