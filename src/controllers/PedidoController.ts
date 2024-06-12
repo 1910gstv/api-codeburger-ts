@@ -6,7 +6,7 @@ export class PedidoController{
         const { nome_usuario } = request.body
 
         try {
-            const allOrders = await prismaClient.pedidos_simples.findMany({
+            const allOrders = await prismaClient.pedidos.findMany({
                 where: {
                     nome_usuario
                 }
@@ -21,7 +21,7 @@ export class PedidoController{
         const { id } = request.params
 
         try {
-            const order = await prismaClient.pedidos_simples.findUnique({
+            const order = await prismaClient.pedidos.findUnique({
                 where: {
                     id: Number(id)
                 }
@@ -36,7 +36,7 @@ export class PedidoController{
         const { descricao, nome_usuario } = request.body
 
         try {
-            const neworderCreated = await prismaClient.pedidos_simples.create({
+            const neworderCreated = await prismaClient.pedidos.create({
                 data: {
                     descricao, nome_usuario
                 }
@@ -52,7 +52,7 @@ export class PedidoController{
         const { descricao, nome_usuario  } = request.body
 
         try {
-            const updateorder = await prismaClient.pedidos_simples.update({
+            const updateorder = await prismaClient.pedidos.update({
                 where: {
                     id: Number(id)
                 },
@@ -70,7 +70,7 @@ export class PedidoController{
         const { id } = request.params
 
         try {
-            await prismaClient.pedidos_simples.delete({
+            await prismaClient.pedidos.delete({
                 where: {
                     id: Number(id)
                 }

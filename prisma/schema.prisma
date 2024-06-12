@@ -43,7 +43,7 @@ model pagamentos {
 //    @@index([usuario_id], map: "id_usuariosfk")
 //  }
 
-model pedidos_simples {
+model pedidos {
   id           Int    @id @default(autoincrement())
   descricao    String @db.VarChar(255)
   nome_usuario String @db.VarChar(255)
