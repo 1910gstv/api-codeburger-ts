@@ -32,7 +32,7 @@ router.put('/updateAddress/:id', enderecos.edit);
 router.delete('/deleteAddress/:id', enderecos.delete);
 
 // PAGAMENTOS ROUTES
-router.get('/getAllPayments', pagamentos.getAll);
+router.get('/getAllPayments', pagamentos.getAllP);
 router.get('/getPayment/:id', pagamentos.getById);
 router.post('/createPayment', pagamentos.create);
 router.put('/updatePayment/:id', pagamentos.edit);
@@ -46,11 +46,11 @@ router.put('/updateOrder/:id', pedidos.edit);
 router.delete('/deleteOrder/:id', pedidos.delete);
 
 // PEDIDOS PRODUTOS ROUTES
-router.get('/getAllOrders', pedidosprodutos.getAll);
-router.get('/getOrder/:id', pedidosprodutos.getById);
-router.post('/createOrder', pedidosprodutos.create);
-router.put('/updateOrder/:id', pedidosprodutos.edit);
-router.delete('/deleteOrder/:id', pedidosprodutos.delete);
+router.get('/getAllOrdersItem', pedidosprodutos.getAll);
+router.get('/getOrderItem/:id', pedidosprodutos.getById);
+router.post('/createOrderItem', pedidosprodutos.create);
+router.put('/updateOrderItem/:id', pedidosprodutos.edit);
+router.delete('/deleteOrderItem/:id', pedidosprodutos.delete);
 
 // PRODUTOS ROUTES
 router.get('/getAllProducts', produtos.getAll);

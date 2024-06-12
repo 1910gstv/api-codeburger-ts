@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { prismaClient } from "../database/prismaClient";
 
 export class PagamentoController{
-    public async getAll(request: Request, response:Response){
+    public async getAllP(request: Request, response:Response){
         try {
             const allPayments = await prismaClient.pagamentos.findMany()
             console.log(allPayments)

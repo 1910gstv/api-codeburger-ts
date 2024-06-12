@@ -3,8 +3,14 @@ import { prismaClient } from "../database/prismaClient";
 
 export class PedidoController{
     public async getAll(request: Request, response:Response){
+        const { nome_usuario } = request.body
+
         try {
-            const allOrders = await prismaClient.pedidos.findMany()
+            const allOrders = await prismaClient.pedidos_simples.findMany({
+                where: {
+                    nome_usuario
+                }
+            })
             return response.status(200).json(allOrders)
         } catch(error) {
             return response.status(500).json(error)
@@ -15,7 +21,7 @@ export class PedidoController{
         const { id } = request.params
 
         try {
-            const order = await prismaClient.pedidos.findUnique({
+            const order = await prismaClient.pedidos_simples.findUnique({
                 where: {
                     id: Number(id)
                 }
@@ -27,12 +33,12 @@ export class PedidoController{
     }
 
     public async create(request: Request, response: Response){
-        const { valor_total, pagamentos_id, usuario_id, pagamentos, usuarios } = request.body
+        const { descricao, nome_usuario } = request.body
 
         try {
-            const neworderCreated = await prismaClient.pedidos.create({
+            const neworderCreated = await prismaClient.pedidos_simples.create({
                 data: {
-                    valor_total, pagamentos_id, usuario_id, pagamentos, usuarios
+                    descricao, nome_usuario
                 }
             });
             return response.status(200).json(neworderCreated)      
@@ -43,15 +49,15 @@ export class PedidoController{
 
     public async edit(request: Request, response: Response){
         const { id } = request.params
-        const { valor_total, pagamentos_id, usuario_id, pagamentos, usuarios  } = request.body
+        const { descricao, nome_usuario  } = request.body
 
         try {
-            const updateorder = await prismaClient.pedidos.update({
+            const updateorder = await prismaClient.pedidos_simples.update({
                 where: {
                     id: Number(id)
                 },
                 data: {
-                    valor_total, pagamentos_id, usuario_id, pagamentos, usuarios
+                    descricao, nome_usuario
                 }
             })
             return response.status(200).json(updateorder)
@@ -64,7 +70,7 @@ export class PedidoController{
         const { id } = request.params
 
         try {
-            await prismaClient.pedidos.delete({
+            await prismaClient.pedidos_simples.delete({
                 where: {
                     id: Number(id)
                 }
