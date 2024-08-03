@@ -43,14 +43,14 @@ router.get('/getAllOrders', pedidos.getAll);
 router.get('/getOrder/:id', pedidos.getById);
 router.post('/createOrder', pedidos.create);
 router.put('/updateOrder/:id', pedidos.edit);
-router.delete('/deleteOrder/:id', pedidos.delete);
+router.delete('/deleteOrder/:id', pedidos.delete);  
 
 // PEDIDOS PRODUTOS ROUTES
 router.get('/getAllOrdersItem', pedidosprodutos.getAll);
-router.get('/getOrderItem/:id', pedidosprodutos.getById);
-router.post('/createOrderItem', pedidosprodutos.create);
-router.put('/updateOrderItem/:id', pedidosprodutos.edit);
-router.delete('/deleteOrderItem/:id', pedidosprodutos.delete);
+// router.get('/getOrderItem/:id', pedidosprodutos.getById);
+// router.post('/createOrderItem', pedidosprodutos.create);
+// router.put('/updateOrderItem/:id', pedidosprodutos.edit);
+// router.delete('/deleteOrderItem/:id', pedidosprodutos.delete);
 
 // PRODUTOS ROUTES
 router.get('/getAllProducts', produtos.getAll);
