@@ -93,18 +93,28 @@ export class PedidoController {
 
       let OrderCreatedId = createNewOrder.id;
 
-      productsSolved.forEach(async (p) => {
+      const createdOrder = productsSolved.forEach(async (p) => {
         var newOrderItem = await prismaClient.pedidosprodutos.create({
           data: {
             PedidoId: OrderCreatedId,
             ProdutoId: p.id,
           },
         });
-        console.log(newOrderItem);
         return newOrderItem;
       });
 
-      return response.status(200).json("Ok");
+      const novo_pedido = {
+        id: createNewOrder.id,
+        usuario: createNewOrder.usuario_id,
+        pagamento: createNewOrder.pagamentos_id,
+        data: createNewOrder.data_pedido,
+        valor_total: createNewOrder.valor_total,
+        produtos: productsSolved,
+      };
+
+      return response.status(200).json({
+        novo_pedido,
+      });
     } catch (error) {
       return response.status(500).json(error);
     }
