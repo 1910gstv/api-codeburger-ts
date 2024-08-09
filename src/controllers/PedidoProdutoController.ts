@@ -4,7 +4,9 @@ import { prismaClient } from "../database/prismaClient";
 export class PedidoProdutoController {
   public async getAll(request: Request, response: Response) {
     try {
-      const allOrders = await prismaClient.pedidos.findMany();                  
+      const allOrders = await prismaClient.pedidosprodutos.groupBy({
+        by: ["PedidoId"],
+      });
       return response.status(200).json(allOrders);
     } catch (error) {
       return response.status(500).json(error);

@@ -39,7 +39,7 @@ router.put('/updatePayment/:id', pagamentos.edit);
 router.delete('/deletePayment/:id', pagamentos.delete);
 
 // PEDIDOS ROUTES
-router.get('/getAllOrders', pedidos.getAll);
+router.get('/getAllOrders/', pedidos.getAll);
 router.get('/getOrder/:id', pedidos.getById);
 router.post('/createOrder', pedidos.create);
 router.put('/updateOrder/:id', pedidos.edit);

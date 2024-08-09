@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -50,8 +51,8 @@ model pedidos {
 
 model pedidosprodutos {
   id        Int       @id @default(autoincrement())
-  PedidoId  Int?
-  ProdutoId Int?
+  PedidoId  Int
+  ProdutoId Int
   pedidos   pedidos?  @relation(fields: [PedidoId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "foreignkey_pedidos_produtos")
   produtos  Produtos? @relation(fields: [ProdutoId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "foreignkey_produtos_pedidos")
 
