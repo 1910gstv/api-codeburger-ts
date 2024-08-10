@@ -34,6 +34,23 @@ export class PedidoController {
             data_pedido: e.data_pedido,
             produtos: e.pedidosprodutos,
             valor_total: e.valor_total,
+            links: [
+              {
+                href: `http://localhost:4000/getOrder/${e.id}`,
+                rel: "self",
+                type: "GET",
+              },
+              {
+                href: `http://localhost:4000/updateOrder/${e.id}`,
+                rel: "update",
+                type: "PUT",
+              },
+              {
+                href: `http://localhost:4000/deleteOrder/${e.id}`,
+                rel: "delete",
+                type: "DELETE",
+              },
+            ],
           },
         };
       });
@@ -52,8 +69,48 @@ export class PedidoController {
         where: {
           id: Number(id),
         },
+        include: {
+          pedidosprodutos: {
+            select: {
+              produtos: {
+                select: {
+                  nome: true,
+                },
+              },
+            },
+          },
+        },
       });
-      return response.status(200).json(order);
+
+      const finalOrder = {
+        pedido: {
+          id: order?.id,
+          usuario: order?.usuario_id,
+          tipo_pagamento: order?.pagamentos_id,
+          data_pedido: order?.data_pedido,
+          produtos: order?.pedidosprodutos,
+          valor_total: order?.valor_total,
+          links: [
+            {
+              href: `http://localhost:4000/getOrder/${order?.id}`,
+              rel: "self",
+              type: "GET",
+            },
+            {
+              href: `http://localhost:4000/updateOrder/${order?.id}`,
+              rel: "update",
+              type: "PUT",
+            },
+            {
+              href: `http://localhost:4000/deleteOrder/${order?.id}`,
+              rel: "delete",
+              type: "DELETE",
+            },
+          ],
+        },
+      };
+
+      return response.status(200).json(finalOrder);
     } catch (error) {
       return response.status(500).json(error);
     }
@@ -147,11 +204,22 @@ export class PedidoController {
     const { id } = request.params;
 
     try {
-      await prismaClient.pedidos.delete({
+      const deleteOrderProducts = prismaClient.pedidosprodutos.deleteMany({
+        where: {
+          PedidoId: Number(id),
+        },
+      });
+      const deleteOrder = prismaClient.pedidos.delete({
         where: {
           id: Number(id),
         },
       });
+
+      const transaction = await prismaClient.$transaction([
+        deleteOrderProducts,
+        deleteOrder,
+      ]);
+
       return response
         .status(200)
         .json({ message: `O pedido ${id} foi deletado` });

@@ -9,61 +9,61 @@ import { UsuarioController } from "./controllers/UsuarioController";
 
 const router = Router();
 
-const categories = new CategoriaController()
-const enderecos = new EnderecoController()
-const pagamentos = new PagamentoController()
-const pedidos = new PedidoController()
-const pedidosprodutos = new PedidoProdutoController()
-const produtos = new ProdutoController()
-const usuarios = new UsuarioController()
+const categories = new CategoriaController();
+const enderecos = new EnderecoController();
+const pagamentos = new PagamentoController();
+const pedidos = new PedidoController();
+const pedidosprodutos = new PedidoProdutoController();
+const produtos = new ProdutoController();
+const usuarios = new UsuarioController();
 
 // CATEGORIAS ROUTES
-router.get('/getAllCategories', categories.getAll);
-router.get('/getCategory/:id', categories.getById);
-router.post('/createCategory', categories.create);
-router.put('/updateCategory/:id', categories.edit);
-router.delete('/deleteCategory/:id', categories.delete);
+router.get("/categories", categories.getAll);
+router.get("/categories/:id", categories.getById);
+router.post("/categories", categories.create);
+router.put("/categories/:id", categories.edit);
+router.delete("/categories/:id", categories.delete);
 
 // ENDERECÇOS ROUTES
-router.get('/getAllAdresses', enderecos.getAll);
-router.get('/getAddress/:id', enderecos.getById);
-router.post('/createAddress', enderecos.create);
-router.put('/updateAddress/:id', enderecos.edit);
-router.delete('/deleteAddress/:id', enderecos.delete);
+router.get("/adresses", enderecos.getAll);
+router.get("/adresses/:id", enderecos.getById);
+router.post("/adresses", enderecos.create);
+router.put("/adresses/:id", enderecos.edit);
+router.delete("/adresses/:id", enderecos.delete);
 
 // PAGAMENTOS ROUTES
-router.get('/getAllPayments', pagamentos.getAllP);
-router.get('/getPayment/:id', pagamentos.getById);
-router.post('/createPayment', pagamentos.create);
-router.put('/updatePayment/:id', pagamentos.edit);
-router.delete('/deletePayment/:id', pagamentos.delete);
+router.get("/payments", pagamentos.getAllP);
+router.get("/payments/:id", pagamentos.getById);
+router.post("/payments", pagamentos.create);
+router.put("/payments/:id", pagamentos.edit);
+router.delete("/payments/:id", pagamentos.delete);
 
 // PEDIDOS ROUTES
-router.get('/getAllOrders/', pedidos.getAll);
-router.get('/getOrder/:id', pedidos.getById);
-router.post('/createOrder', pedidos.create);
-router.put('/updateOrder/:id', pedidos.edit);
-router.delete('/deleteOrder/:id', pedidos.delete);  
+router.get("/orders/", pedidos.getAll);
+router.get("/orders/:id", pedidos.getById);
+router.post("/orders", pedidos.create);
+router.put("/orders/:id", pedidos.edit);
+router.delete("/orders/:id", pedidos.delete);
 
 // PEDIDOS PRODUTOS ROUTES
-router.get('/getAllOrdersItem', pedidosprodutos.getAll);
-// router.get('/getOrderItem/:id', pedidosprodutos.getById);
-// router.post('/createOrderItem', pedidosprodutos.create);
-// router.put('/updateOrderItem/:id', pedidosprodutos.edit);
-// router.delete('/deleteOrderItem/:id', pedidosprodutos.delete);
+router.get("/orders-item", pedidosprodutos.getAll);
+router.get("/orders-item/:id", pedidosprodutos.getById);
+router.post("/orders-item", pedidosprodutos.create);
+router.put("/orders-item/:id", pedidosprodutos.edit);
+router.delete("/orders-item/:id", pedidosprodutos.delete);
 
 // PRODUTOS ROUTES
-router.get('/getAllProducts', produtos.getAll);
-router.get('/getProduct/:id', produtos.getById);
-router.post('/createProduct', produtos.create);
-router.put('/updateProduct/:id', produtos.edit);
-router.delete('/deleteProduct/:id', produtos.delete);
+router.get("/products", produtos.getAll);
+router.get("/products/:id", produtos.getById);
+router.post("/products", produtos.create);
+router.put("/products/:id", produtos.edit);
+router.delete("/products/:id", produtos.delete);
 
 // USUARIOS ROUTES
-router.get('/getAllUsers', usuarios.getAll);
-router.get('/getUser/:id', usuarios.getById);
-router.post('/createUser', usuarios.create);
-router.put('/updateUser/:id', usuarios.edit);
-router.delete('/deleteUser/:id', usuarios.delete);
+router.get("/users", usuarios.getAll);
+router.get("/users/:id", usuarios.getById);
+router.post("/users", usuarios.create);
+router.put("/users/:id", usuarios.edit);
+router.delete("/users/:id", usuarios.delete);
 
 export { router };
